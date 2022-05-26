@@ -1,5 +1,5 @@
 <h1 align='center'>
- :open_file_folder: API + Aplicação - Consulta e Cadastro de filme:
+ :open_file_folder: API + Aplicação - Consulta e Cadastro de filmes
   <br>
   <img src="https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white" alt="php" />
 </h1>
