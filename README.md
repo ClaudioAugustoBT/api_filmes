@@ -13,7 +13,7 @@ Conteúdo:
     <ul>:bookmark_tabs: Index para acesso rapido para aplicação de consumo da API</ul>
     <ul>:bookmark_tabs: Script de banco de dados</ul>
   <li>:file_folder: API</li>
-    <ul>:bookmark_tabs: API para consultar e cadastar filmes</ul>
+    <ul>:bookmark_tabs: API para consultar e cadastrar filmes</ul>
   <li>:file_folder: Application</li>
     <ul>:bookmark_tabs: Aplicação pada desmonstar consumo da API</ul>
   
