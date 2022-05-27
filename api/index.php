@@ -15,7 +15,6 @@ require_once(dirname(__FILE__) . '/config.php');
 require_once(dirname(__FILE__) . '/Filme.php');
 $filme = new Filme;
 
-
 /*
 **Consultar e Cadastar Filmes filmes Cadastrados
 ** ============================================================+
@@ -25,7 +24,7 @@ $filme = new Filme;
 ** $_GET['id'] = Id do filme a ser consultado
 ** ============================================================+
 ** Method: POST - Consultar e cadastar
-** $_POST['id_filme'] -> retorna array com dados um filme por ID requisitado
+** $_POST['procura_filme'] -> retorna array filmes da procura
 ** $_POST['titulo'] -> titulo do filme a ser cadastrado
 ** $_POST['categoria'] -> categoria do filme a ser cadastrado
 ** $_POST['duracao'] -> duração em minutos do filme a ser cadastrado
@@ -54,10 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         die("Error: Faltam parametros!");
     }
 } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    if(isset($_POST['id_filme'])){
+    if(isset($_POST['procura_filme'])){
         try {
-            $id = isset($_POST['id_filme']) ? intval($_POST['id_filme']) : 0;
-            echo json_encode($filme->getFilmePorId($id));
+            echo json_encode($filme->buscarFilme($_POST['procura_filme']));
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }

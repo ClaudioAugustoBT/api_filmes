@@ -1,7 +1,7 @@
 <?php
 
 //============================================================+
-//ENDPOINT - Consultar / Cadastrar de Filmes
+//ENDPOINTS - Consultar / Cadastrar de Filmes
 //============================================================+
 
 class Filme
@@ -72,6 +72,66 @@ class Filme
         } catch (PDOException $e) {
             die('Error: ' . $e->getMessage());
         }
+    }
+
+    /*
+    ** Procura filmes cadastrados por id, titulo ou categoria
+    */
+    public function buscarFilme($filmeInfo)
+    {
+        $todosFilmes = $this->getTodosFilmes();
+        $result = array();
+
+        $buscaPorId = intval($filmeInfo) > 0 ? intval($filmeInfo) : false;
+        if ($buscaPorId) {
+            $response = $this->getFilmePorId($buscaPorId);
+            $result = array("matchID" => $response);
+        } else {
+
+            $busca = $this->prepara_string_para_busca($filmeInfo);
+
+            $result = array_merge(array("matchTitulo" => []), array("matchCategoria" => []));
+
+            $arr_index = 0;
+
+            foreach ($todosFilmes as $filme) {
+
+                $titulo = $this->prepara_string_para_busca($filme["titulo"]);
+                $categoria = $this->prepara_string_para_busca($filme["categoria"]);
+
+                if ($busca == $titulo) {
+                    $result["matchTitulo"][$arr_index] = $filme;
+                    $arr_index++;
+                } else if ($busca == $categoria) {
+                    $result["matchCategoria"][$arr_index] = $filme;
+                    $arr_index++;
+                } else {
+                    preg_match('/'.$busca.'/', $titulo, $matches);
+                    if (count($matches) > 0) {
+                        $result["matchTitulo"][$arr_index] = $filme;
+                        $arr_index++;
+                    } else {
+                        preg_match('/'.$busca.'/', $categoria, $matches);
+                        if (count($matches) > 0) {
+                            $result["matchCategoria"][$arr_index] = $filme;
+                            $arr_index++;
+                        }else{
+                            //filme não encontrado
+                        }
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    private function prepara_string_para_busca(STRING $string)
+    {
+        $string = strtolower($string);
+        $string = preg_replace('/[@\.\;\" "]+/', '', $string);
+
+        return $string;
     }
 
     /*

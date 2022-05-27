@@ -9,7 +9,7 @@
 
     <h1>Consultar filme</h1>
     <form method="POST" action="../api/index.php">
-        Cógido do Filme: <input type="number" min="1" step="1" name="id_filme" id="id_filme" required="required"><br><br>
+        ID, Titulo ou Categoria do Filme: <input type="text" name="procura_filme" id="procura_filme" required="required"><br><br>
         <input type="submit" value="CONSULTAR">
     </form>
     <br>
