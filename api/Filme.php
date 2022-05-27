@@ -90,7 +90,7 @@ class Filme
 
             $busca = $this->prepara_string_para_busca($filmeInfo);
 
-            $result = array_merge(array("matchTitulo" => []), array("matchCategoria" => []));
+            //$result = array_merge(array("matchTitulo" => []), array("matchCategoria" => []));
 
             $arr_index = 0;
 
@@ -106,21 +106,28 @@ class Filme
                     $result["matchCategoria"][$arr_index] = $filme;
                     $arr_index++;
                 } else {
-                    preg_match('/'.$busca.'/', $titulo, $matches);
+                    preg_match('/' . $busca . '/', $titulo, $matches);
+
                     if (count($matches) > 0) {
                         $result["matchTitulo"][$arr_index] = $filme;
                         $arr_index++;
                     } else {
-                        preg_match('/'.$busca.'/', $categoria, $matches);
+
+                        preg_match('/' . $busca . '/', $categoria, $matches);
+
                         if (count($matches) > 0) {
                             $result["matchCategoria"][$arr_index] = $filme;
                             $arr_index++;
-                        }else{
-                            //filme não encontrado
+                        } else {
+                            //$nenhum filme encontrado
                         }
                     }
                 }
             }
+        }
+
+        if (!$result) {
+            throw new Exception('Filme não encontrado');
         }
 
         return $result;
